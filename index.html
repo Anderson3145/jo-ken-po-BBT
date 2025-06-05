@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>DevClub Jokenpô - Big Bang Theory</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Jokenpô, Lagarto Spock</h1>
+
+        <div class="buttons">
+            <button id="rock" onclick="humanPlayer('rock')">🪨</button>
+            <button id="paper" onclick="humanPlayer('paper')">📃</button>
+            <button id="scissors" onclick="humanPlayer('scissors')">✂️</button>
+            <button id="lizard" onclick="humanPlayer('lizard')">🦎</button>
+            <button id="spock" onclick="humanPlayer('spock')">
+                <img src="assets/spock.webp" alt="Spock" width="32" height="32">
+            </button>
+        </div>
+
+        <p class="result" id="result"></p>
+
+        <div class="choices">
+            <p>Você escolheu: <span id="human-choice"></span></p>
+            <p>Oponente escolheu: <span id="machine-choice"></span></p>
+        </div>
+
+        <br>
+        <p class="your-score">Sua Pontuação: <span id="my-score">0</span></p>
+        <br>
+        <p class="enemy-score">Pontuação do Oponente: <span id="machine-score">0</span></p>
+
+        <button id="reset" onclick="resetGame()">🔁 Reiniciar Jogo</button>
+        <h2 id="game-over" class="game-over"></h2>
+    </div>
+
+    <script src="./script.js"></script>
+</body>
+
+</html>
