@@ -1,3 +1,14 @@
+// Função para carregar uma imagem aleatória da série The Big Bang Theory como fundo
+function setBackgroundImage() {
+    const totalImages = 86; // você tem de BBT1.jpg até BBT86.jpg
+    const randomNumber = Math.floor(Math.random() * totalImages) + 1;
+    const imagePath = `img/BBT${randomNumber}.jpg`;
+    document.body.style.backgroundImage = `url('${imagePath}')`;
+}
+
+// Chama a função para definir a imagem inicial
+setBackgroundImage();
+
 const result = document.getElementById("result");
 const humanScore = document.querySelector("#my-score");
 const machineScore = document.querySelector("#machine-score");
@@ -60,6 +71,9 @@ const humanPlayer = (humanChoice) => {
 };
 
 const resetGame = () => {
+     // Muda a imagem de fundo ao reiniciar o jogo
+    setBackgroundImage();
+    
     // Reseta pontuação
     humanScoreNumber = 0;
     machineScoreNumber = 0;
