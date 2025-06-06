@@ -1,9 +1,17 @@
 // Função para carregar uma imagem aleatória da série The Big Bang Theory como fundo
 function setBackgroundImage() {
-    const totalImages = 86; // você tem de BBT1.jpg até BBT86.jpg
+    const totalImages = 86;
     const randomNumber = Math.floor(Math.random() * totalImages) + 1;
     const imagePath = `img/BBT${randomNumber}.jpg`;
-    document.body.style.backgroundImage = `url('${imagePath}')`;
+
+    const bgContainer = document.getElementById("background-container");
+    if (bgContainer) {
+        bgContainer.style.opacity = "0";
+        setTimeout(() => {
+            bgContainer.style.backgroundImage = `url('${imagePath}')`;
+            bgContainer.style.opacity = "1";
+        }, 300);
+    }
 }
 
 // Chama a função para definir a imagem inicial
@@ -22,18 +30,11 @@ const soundTie = new Audio("./efeitos/empate.wav");
 const soundFinalWin = new Audio("./efeitos/final-big-bang.wav");
 const soundFinalLose = new Audio("./efeitos/derrota-final.wav");
 
-// Configuração adicional para sons
-soundFinalWin.preload = "auto";
-soundFinalWin.volume = 0.8;
-
-// Desbloqueio inicial de áudio com interação do usuário
 document.body.addEventListener('click', () => {
-    // Toca um som curto para liberar todos os sons
     const unlockSound = new Audio();
-    unlockSound.src = "./efeitos/silence.mp3"; // Arquivo opcional de 0.1s de silêncio
+    unlockSound.src = "./efeitos/silence.mp3";
     unlockSound.play().catch(() => {});
 
-    // Ou, como alternativa, usamos o próprio som da vitória para desbloquear
     soundFinalWin.play()
         .then(() => {
             soundFinalWin.pause();
@@ -71,34 +72,26 @@ const humanPlayer = (humanChoice) => {
 };
 
 const resetGame = () => {
-     // Muda a imagem de fundo ao reiniciar o jogo
     setBackgroundImage();
-    
-    // Reseta pontuação
+
     humanScoreNumber = 0;
     machineScoreNumber = 0;
     humanScore.textContent = humanScoreNumber;
     machineScore.textContent = machineScoreNumber;
 
-    // Limpa histórico
     humanHistory = [];
 
-    // Limpa resultados visuais
     result.innerHTML = "";
     result.classList.remove("win", "lose", "tie");
 
     humanChoiceEl.innerHTML = "";
     machineChoiceEl.innerHTML = "";
 
-    // Remove mensagem de fim de jogo
     const gameOver = document.getElementById("game-over");
     gameOver.classList.remove("show", "win", "lose");
     gameOver.textContent = "";
 
-    // Reativa todos os botões
-    document.querySelectorAll("button").forEach(btn => {
-        btn.disabled = false;
-    });
+    document.querySelectorAll("button").forEach(btn => btn.disabled = false);
 };
 
 const machinePlayer = () => {
@@ -123,11 +116,10 @@ const playtheGame = (human, machine) => {
     const gameOver = document.getElementById("game-over");
     if (gameOver.classList.contains("show")) return;
 
-    // Desativa temporariamente os botões
     document.querySelectorAll("button").forEach(btn => btn.disabled = true);
 
     result.classList.remove("win", "lose", "tie");
-    void result.offsetWidth; // Força reflow para animação
+    void result.offsetWidth;
 
     console.log("Humano: " + human + " Máquina: " + machine);
 
@@ -155,7 +147,6 @@ const playtheGame = (human, machine) => {
         soundLose.play();
     }
 
-    // Reativa os botões após mostrar o resultado
     setTimeout(() => {
         document.querySelectorAll("button").forEach(btn => btn.disabled = false);
     }, 800);
@@ -167,22 +158,11 @@ const playtheGame = (human, machine) => {
             gameOver.textContent = "🎉 Você venceu a partida!";
             gameOver.classList.add("show", "win");
 
-            // Garantir que outros sons parem
             soundFinalLose.pause();
             soundFinalLose.currentTime = 0;
 
-            // Reinicia música
             soundFinalWin.currentTime = 0;
-
-            console.log("Tentando tocar música final...");
-
-            soundFinalWin.play()
-                .then(() => {
-                    console.log("✅ Música final começou a tocar!");
-                })
-                .catch(e => {
-                    console.error("❌ Erro ao tocar música final:", e);
-                });
+            soundFinalWin.play().catch(e => console.error("Erro ao tocar música final", e));
         } else {
             gameOver.textContent = "😢 A máquina venceu!";
             gameOver.classList.add("show", "lose");
