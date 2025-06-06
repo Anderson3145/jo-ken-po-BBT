@@ -5,12 +5,19 @@
 }
 
 body {
+    
+    margin: 0;
+    padding: 0;
     background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
     font-family: 'Segoe UI', sans-serif;
+    transition: background-image 0.5s ease-in-out;
 }
 
 .container {
@@ -171,5 +178,17 @@ p {
 
     .game-over {
         font-size: 1.2rem;
+    }
+
+    body {
+        background-attachment: scroll;
+        background-size: contain;
+        background-position: top center;
+        overflow: auto;
+    }
+
+    .container {
+        padding: 20px 10px;
+        max-width: 95%;
     }
 }
