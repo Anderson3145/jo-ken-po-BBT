@@ -11,7 +11,7 @@
 
 ## 📌 Sobre o Projeto 
 
-Este é um jogo web interativo de **Pedra, Papel, Tesoura, Lagarto e Spock**, inspirado nas regras icônicas apresentadas na série *The Big Bang Theory*. Baseado inicialmente no desafio proposto pela [**Dev Club**](https://www.devclub.com.br),  o projeto foi totalmente **modificado, adaptado e incrementado** por mim, Anderson Rios, com o objetivo de criar uma experiência responsiva, visualmente envolvente e fiel ao universo geek.
+Este é um jogo web interativo de **Pedra, Papel, Tesoura, Lagarto e Spock**, inspirado nas regras icônicas apresentadas na série *The Big Bang Theory*. Baseado inicialmente no desafio proposto pela [**Dev Club**](https://aulas.devclub.com.br/ ),  o projeto foi totalmente **modificado, adaptado e incrementado** por mim, Anderson Rios, com o objetivo de criar uma experiência responsiva, visualmente envolvente e fiel ao universo geek.
 
 🔗 [Acesse o jogo online aqui](https://anderson3145.github.io/jo-ken-po-BBT/)    
 
@@ -62,7 +62,7 @@ Tudo isso com fundos aleatórios da série *The Big Bang Theory*, animações su
 
 ## 🙌 Créditos & Agradecimentos
 
-- Projeto original inspirado no desafio da [**Dev Club**](https://www.devclub.com.br) 
+- Projeto original inspirado no desafio da [**Dev Club**](https://aulas.devclub.com.br/ ) 
 - Regras criadas por Sam Kass e Karen Bryla, popularizadas por *The Big Bang Theory*
 - Imagens e sons utilizados são de domínio público ou referências culturais
 - Desenvolvimento, adaptação e paixão por **Anderson Rios**
