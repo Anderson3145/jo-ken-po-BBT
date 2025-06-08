@@ -1,5 +1,6 @@
-let difficultyLevel = 1; 
-let roundsPlayed = 0;    
+let difficultyLevel = 1;
+let roundsPlayed = 0;
+let firstPlay = true;
 
 function setBackgroundImage() {
     const totalImages = 86;
@@ -33,14 +34,14 @@ const soundFinalLose = new Audio("./efeitos/derrota-final.wav");
 document.body.addEventListener('click', () => {
     const unlockSound = new Audio();
     unlockSound.src = "./efeitos/silence.mp3";
-    unlockSound.play().catch(() => {});
+    unlockSound.play().catch(() => { });
 
     soundFinalWin.play()
         .then(() => {
             soundFinalWin.pause();
             soundFinalWin.currentTime = 0;
         })
-        .catch(() => {});
+        .catch(() => { });
 }, { once: true });
 
 let humanScoreNumber = 0;
@@ -67,7 +68,7 @@ function getEmoji(choice) {
 }
 
 function increaseDifficulty() {
-    difficultyLevel += 0.5; 
+    difficultyLevel += 0.5;
 }
 
 const resetGame = () => {
@@ -79,8 +80,8 @@ const resetGame = () => {
     machineScore.textContent = machineScoreNumber;
 
     humanHistory = [];
-    roundsPlayed = 0; 
-    difficultyLevel = 1; 
+    roundsPlayed = 0;
+    difficultyLevel = 1;
 
     result.innerHTML = "";
     result.classList.remove("win", "lose", "tie");
@@ -93,17 +94,29 @@ const resetGame = () => {
     gameOver.textContent = "";
 
     document.querySelectorAll("button").forEach(btn => btn.disabled = false);
+
+    document.getElementById("rules").style.display = "none";
+
+    const paragraphs = document.querySelectorAll(".container p");
+    paragraphs.forEach(p => p.style.display = "block");
+
+    firstPlay = true;
 };
 
 const humanPlayer = (humanChoice) => {
-    roundsPlayed++; 
+    if (firstPlay) {
+        document.getElementById("rules-button").style.display = "none";
+        firstPlay = false;
+    }
+
+    roundsPlayed++;
     playtheGame(humanChoice, machinePlayer());
 };
 
 const machinePlayer = () => {
     const choices = ["rock", "paper", "scissors", "lizard", "spock"];
 
-    const smartChoiceProbability = Math.min(0.2 + (difficultyLevel - 1) * 0.2, 0.8); 
+    const smartChoiceProbability = Math.min(0.2 + (difficultyLevel - 1) * 0.2, 0.8);
 
     if (Math.random() < smartChoiceProbability && humanHistory.length > 0) {
         const lastChoice = humanHistory[humanHistory.length - 1];
@@ -120,7 +133,6 @@ const machinePlayer = () => {
     return choices[Math.floor(Math.random() * choices.length)];
 };
 
-// Função principal do jogo
 const playtheGame = (human, machine) => {
     const gameOver = document.getElementById("game-over");
     if (gameOver.classList.contains("show")) return;
@@ -171,11 +183,31 @@ const playtheGame = (human, machine) => {
             soundFinalLose.currentTime = 0;
 
             soundFinalWin.currentTime = 0;
-            soundFinalWin.play().catch(e => {});
+            soundFinalWin.play().catch(e => { });
         } else {
             gameOver.textContent = "😢 A máquina venceu!";
             gameOver.classList.add("show", "lose");
-            soundFinalLose.play().catch(e => {});
+            soundFinalLose.play().catch(e => { });
         }
     }
 };
+
+function toggleRules() {
+    const rulesDiv = document.getElementById("rules");
+    const rulesButton = document.getElementById("rules-button");
+    const paragraphs = document.querySelectorAll(".container p");
+
+    if (rulesDiv.style.display === "none" || rulesDiv.style.display === "") {
+
+        rulesDiv.style.display = "block";
+        rulesButton.textContent = "❌ Esconder Regras";
+
+        paragraphs.forEach(p => p.style.display = "none");
+    } else {
+
+        rulesDiv.style.display = "none";
+        rulesButton.textContent = "📖 Mostrar Regras";
+
+        paragraphs.forEach(p => p.style.display = "block");
+    }
+}

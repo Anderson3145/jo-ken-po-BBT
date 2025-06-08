@@ -9,10 +9,8 @@
 </head>
 
 <body>
-    <!-- Container para background -->
     <div id="background-container"></div>
 
-    <!-- Conteúdo principal -->
     <div class="container">
         <h1>Jokenpô, Lagarto Spock</h1>
 
@@ -24,6 +22,20 @@
             <button id="spock" onclick="humanPlayer('spock')">
                 <img src="assets/spock.webp" alt="Spock" width="32" height="32">
             </button>
+        </div>
+
+        <div id="rules" style="display: none;">
+            <h2>Regras do Jokenpô Estendido</h2>
+            <ul>
+                <li>Pedra (🪨) esmaga Tesoura (✂️) e esmaga Lagarto (🦎).</li>
+                <li>Papel (📃) cobre Pedra (🪨) e refuta <img src="assets/spock.webp" alt="Spock" width="24" height="24"
+                        style="vertical-align: middle;"></li>
+                <li>Tesoura (✂️) corta Papel (📃) e decapita Lagarto (🦎).</li>
+                <li>Lagarto (🦎) come Papel (📃) e envenena <img src="assets/spock.webp" alt="Spock" width="24"
+                        height="24" style="vertical-align: middle;"></li>
+                <li><img src="assets/spock.webp" alt="Spock" width="24" height="24" style="vertical-align: middle;">
+                    vaporiza Pedra (🪨) e destrói Tesoura (✂️).</li>
+            </ul>
         </div>
 
         <p class="result" id="result"></p>
@@ -38,7 +50,11 @@
         <br>
         <p class="enemy-score">Pontuação do Oponente: <span id="machine-score">0</span></p>
 
-        <button id="reset" onclick="resetGame()">🔁 Reiniciar Jogo</button>
+        <div class="game-buttons">
+            <button id="reset" onclick="resetGame()">🔁 Reiniciar Jogo</button>
+            <button id="rules-button" onclick="toggleRules()">📖 Mostrar/Esconder Regras</button>
+        </div>
+
         <h2 id="game-over" class="game-over"></h2>
     </div>
 
