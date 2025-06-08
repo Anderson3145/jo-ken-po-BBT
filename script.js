@@ -1,4 +1,6 @@
-// Função para carregar uma imagem aleatória da série The Big Bang Theory como fundo
+let difficultyLevel = 1; 
+let roundsPlayed = 0;    
+
 function setBackgroundImage() {
     const totalImages = 86;
     const randomNumber = Math.floor(Math.random() * totalImages) + 1;
@@ -14,7 +16,6 @@ function setBackgroundImage() {
     }
 }
 
-// Chama a função para definir a imagem inicial
 setBackgroundImage();
 
 const result = document.getElementById("result");
@@ -23,7 +24,6 @@ const machineScore = document.querySelector("#machine-score");
 const humanChoiceEl = document.getElementById("human-choice");
 const machineChoiceEl = document.getElementById("machine-choice");
 
-// Sons
 const soundWin = new Audio("./efeitos/vitoria.wav");
 const soundLose = new Audio("./efeitos/derrota.wav");
 const soundTie = new Audio("./efeitos/empate.wav");
@@ -47,7 +47,6 @@ let humanScoreNumber = 0;
 let machineScoreNumber = 0;
 let humanHistory = [];
 
-// Regras do jogo estendido
 const rules = {
     rock: ['scissors', 'lizard'],
     paper: ['rock', 'spock'],
@@ -67,9 +66,9 @@ function getEmoji(choice) {
     }
 }
 
-const humanPlayer = (humanChoice) => {
-    playtheGame(humanChoice, machinePlayer());
-};
+function increaseDifficulty() {
+    difficultyLevel += 0.5; 
+}
 
 const resetGame = () => {
     setBackgroundImage();
@@ -80,6 +79,8 @@ const resetGame = () => {
     machineScore.textContent = machineScoreNumber;
 
     humanHistory = [];
+    roundsPlayed = 0; 
+    difficultyLevel = 1; 
 
     result.innerHTML = "";
     result.classList.remove("win", "lose", "tie");
@@ -94,10 +95,17 @@ const resetGame = () => {
     document.querySelectorAll("button").forEach(btn => btn.disabled = false);
 };
 
+const humanPlayer = (humanChoice) => {
+    roundsPlayed++; 
+    playtheGame(humanChoice, machinePlayer());
+};
+
 const machinePlayer = () => {
     const choices = ["rock", "paper", "scissors", "lizard", "spock"];
 
-    if (Math.random() < 0.2 && humanHistory.length > 0) {
+    const smartChoiceProbability = Math.min(0.2 + (difficultyLevel - 1) * 0.2, 0.8); 
+
+    if (Math.random() < smartChoiceProbability && humanHistory.length > 0) {
         const lastChoice = humanHistory[humanHistory.length - 1];
         switch (lastChoice) {
             case "rock": return Math.random() < 0.5 ? "paper" : "spock";
@@ -112,6 +120,7 @@ const machinePlayer = () => {
     return choices[Math.floor(Math.random() * choices.length)];
 };
 
+// Função principal do jogo
 const playtheGame = (human, machine) => {
     const gameOver = document.getElementById("game-over");
     if (gameOver.classList.contains("show")) return;
@@ -120,8 +129,6 @@ const playtheGame = (human, machine) => {
 
     result.classList.remove("win", "lose", "tie");
     void result.offsetWidth;
-
-    console.log("Humano: " + human + " Máquina: " + machine);
 
     humanChoiceEl.innerHTML = getEmoji(human);
     machineChoiceEl.innerHTML = getEmoji(machine);
@@ -139,6 +146,8 @@ const playtheGame = (human, machine) => {
         result.innerHTML = "🚀 Você venceu! 🚀";
         result.classList.add("win");
         soundWin.play();
+
+        increaseDifficulty();
     } else {
         machineScoreNumber++;
         machineScore.textContent = machineScoreNumber;
@@ -162,11 +171,11 @@ const playtheGame = (human, machine) => {
             soundFinalLose.currentTime = 0;
 
             soundFinalWin.currentTime = 0;
-            soundFinalWin.play().catch(e => console.error("Erro ao tocar música final", e));
+            soundFinalWin.play().catch(e => {});
         } else {
             gameOver.textContent = "😢 A máquina venceu!";
             gameOver.classList.add("show", "lose");
-            soundFinalLose.play().catch(e => console.error("Erro ao tocar som final", e));
+            soundFinalLose.play().catch(e => {});
         }
     }
 };
